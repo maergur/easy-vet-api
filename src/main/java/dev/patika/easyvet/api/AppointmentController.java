@@ -10,10 +10,7 @@ import dev.patika.easyvet.core.utilities.ResultHelper;
 import dev.patika.easyvet.dto.request.appointmentdate.AppointmentDateSaveRequest;
 import dev.patika.easyvet.dto.response.animal.AnimalResponse;
 import dev.patika.easyvet.dto.response.appointment.AppointmentDateResponse;
-import dev.patika.easyvet.entities.Animal;
-import dev.patika.easyvet.entities.Appointment;
-import dev.patika.easyvet.entities.Customer;
-import dev.patika.easyvet.entities.Doctor;
+import dev.patika.easyvet.entities.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -68,26 +65,28 @@ public class AppointmentController {
         return this.appointmentService.getById(id);
     }
 
-
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public List<Appointment> getAllAppointments() {
+        return this.appointmentService.findAll();
+    }
     @GetMapping("/filterByDoctor")
     @ResponseStatus(HttpStatus.OK)
     public List<Appointment> filterByDoctor(
-            @RequestParam(name = "doctor_id") int doctorId ,
+            @RequestParam(name = "doctorName") String doctorName ,
             @RequestParam(name = "startDate") LocalDateTime startDate ,
             @RequestParam(name = "endDate") LocalDateTime endDate) {
 
-        return this.appointmentService.filterbyDoctor(doctorId, startDate, endDate);
+        return this.appointmentService.filterbyDoctor(doctorName, startDate, endDate);
     }
-
-
 
     @GetMapping("/filterByAnimal")
     @ResponseStatus(HttpStatus.OK)
     public List<Appointment> filterByAnimal(
-            @RequestParam(name = "animal_id") int animalId ,
+            @RequestParam(name = "animalName") String animalName ,
             @RequestParam(name = "startDate") LocalDateTime startDate ,
             @RequestParam(name = "endDate") LocalDateTime endDate) {
-        return this.appointmentService.filterbyAnimal(animalId, startDate, endDate);
+        return this.appointmentService.filterbyAnimal(animalName, startDate, endDate);
     }
 
 }

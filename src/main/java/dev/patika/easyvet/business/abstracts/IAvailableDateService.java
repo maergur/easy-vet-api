@@ -1,5 +1,6 @@
 package dev.patika.easyvet.business.abstracts;
 
+import dev.patika.easyvet.entities.Animal;
 import dev.patika.easyvet.entities.AvailableDate;
 import dev.patika.easyvet.entities.Customer;
 import dev.patika.easyvet.entities.Doctor;
@@ -20,4 +21,9 @@ public interface IAvailableDateService {
     List<AvailableDate> findByDoctorAndAvailableDateDate(
             Doctor doctor, LocalDate availableDate
     );
+
+    List<AvailableDate> getAllAvailableDates();
+
+    List<AvailableDate> getAvailableDatesByDoctorName(String doctorName);
+
 }

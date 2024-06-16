@@ -14,5 +14,6 @@ import java.time.LocalDate;
 public class AvailableDateResponse {
     private LocalDate availableDate;
     private int doctorId;
+    private Doctor doctor;
 
 }

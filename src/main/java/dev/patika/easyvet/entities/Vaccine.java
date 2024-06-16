@@ -41,4 +41,9 @@ public class Vaccine {
     @JoinColumn(name = "animal_id")
     private Animal animal;
 
+    @ManyToOne  (fetch = FetchType.EAGER)
+    @JoinColumn(name = "vaccine_report_id",referencedColumnName = "report_id")
+    private Report report;
+
+
 }

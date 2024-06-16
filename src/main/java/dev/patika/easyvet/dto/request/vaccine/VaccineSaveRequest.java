@@ -17,5 +17,6 @@ public class VaccineSaveRequest {
     private LocalDate protectionSD;
     private LocalDate protectionFD;
     private int animalId;
+    private int reportId;
 
 }

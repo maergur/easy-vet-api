@@ -1,9 +1,11 @@
 package dev.patika.easyvet.business.concretes;
 
 import dev.patika.easyvet.business.abstracts.IVaccineService;
+import dev.patika.easyvet.core.config.modelMapper.IModelMapperService;
 import dev.patika.easyvet.core.utilities.ResultHelper;
 import dev.patika.easyvet.dao.IVaccineRepo;
 import dev.patika.easyvet.dto.request.vaccine.VaccineDateFilterRequest;
+import dev.patika.easyvet.dto.response.vaccine.VaccineResponse;
 import dev.patika.easyvet.entities.Vaccine;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -20,9 +22,13 @@ public class VaccineManager implements IVaccineService {
     private final IVaccineRepo vaccineRepo;
     private final EntityManager entityManager;
 
-    public VaccineManager(IVaccineRepo vaccineRepo, EntityManager entityManager) {
+    private final IModelMapperService modelMapper;
+
+
+    public VaccineManager(IVaccineRepo vaccineRepo, EntityManager entityManager, IModelMapperService modelMapper) {
         this.vaccineRepo = vaccineRepo;
         this.entityManager = entityManager;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -46,12 +52,12 @@ public class VaccineManager implements IVaccineService {
     }
 
     @Override
-    public Vaccine getById(Long id) {
+    public VaccineResponse getById(Long id) {
         Vaccine vaccine = this.vaccineRepo.findById(id).orElse(null);
         if (vaccine == null) {
             throw new RuntimeException(id + " ID was not found!");
         } else {
-            return vaccine;
+            return this.modelMapper.forResponse().map(vaccine,VaccineResponse.class);
         }
 
     }
@@ -81,6 +87,21 @@ public class VaccineManager implements IVaccineService {
         return query.getResultList();
     }
 
+    @Override
+    public List<Vaccine> getVaccinesByAnimalName(String animalName) {
+        // The JPQL query string to fetch vaccines based on animal name
+        String queryString = "SELECT v FROM Vaccine v WHERE v.animal.name = :animal_name";
+
+        // Creating a query with the specified JPQL string and setting the result type to Vaccine
+        Query query = entityManager.createQuery(queryString, Vaccine.class);
+
+        // Setting the parameter 'animal_name' to the value provided in the method's argument
+        query.setParameter("animal_name", animalName);
+
+        // Executing the query and returning the result list
+        return query.getResultList();
+    }
+
     public List<Vaccine> checkVaccineByAnimal(Vaccine vaccine) {
         String queryString = "SELECT v FROM Vaccine v WHERE v.animal.id = " +
                 ":animal_id AND v.code = :code AND v.name = :vaccine_name " +
@@ -105,6 +126,11 @@ public class VaccineManager implements IVaccineService {
         );
         return vaccineList;
 
+    }
+
+    @Override
+    public List<Vaccine> findAll() {
+        return this.vaccineRepo.findAll();
     }
 
 }

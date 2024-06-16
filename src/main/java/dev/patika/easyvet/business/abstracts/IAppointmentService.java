@@ -1,6 +1,7 @@
 package dev.patika.easyvet.business.abstracts;
 
 import dev.patika.easyvet.entities.Appointment;
+import dev.patika.easyvet.entities.AvailableDate;
 import dev.patika.easyvet.entities.Customer;
 import dev.patika.easyvet.entities.Doctor;
 import org.springframework.data.domain.Page;
@@ -17,11 +18,14 @@ public interface IAppointmentService {
     void delete(Long id);
     List<Appointment> findAll();
 
-    List<Appointment> filterbyDoctor(int doctorId, LocalDateTime startDate, LocalDateTime endDate);
-    public List<Appointment> filterbyAnimal(int animalId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Appointment> filterbyDoctor(String doctorName, LocalDateTime startDate, LocalDateTime endDate);
+    public List<Appointment> filterbyAnimal(String animalName, LocalDateTime startDate, LocalDateTime endDate);
 
     List<Appointment> findByDoctorAndAppointmentDate(
             Doctor doctor, LocalDateTime appointmentDate
     );
+
+    List<Appointment> getAllAppointments();
+
 
 }

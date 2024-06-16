@@ -8,8 +8,13 @@ import javax.print.Doc;
 public interface IDoctorService {
     Doctor save(Doctor doctor);
     Doctor get(int id);
+
+    Doctor getByName(String name);
     Page<Doctor> cursor(int page, int pageSize);
     Doctor update(Doctor doctor);
     boolean delete(int id);
+
+    Doctor findByName(String name);
+
 
 }

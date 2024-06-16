@@ -108,12 +108,12 @@ public class AppointmentManager implements IAppointmentService {
     }
 
     @Override
-    public List<Appointment> filterbyDoctor(int doctorId, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Appointment> filterbyDoctor(String doctorName, LocalDateTime startDate, LocalDateTime endDate) {
         AppointmentFilterByDoctor appointmentFilterByDoctorDTO = new AppointmentFilterByDoctor();
-        appointmentFilterByDoctorDTO.setDoctorId(doctorId);
+        appointmentFilterByDoctorDTO.setDoctorName(doctorName);
         appointmentFilterByDoctorDTO.setStartDate(startDate);
         appointmentFilterByDoctorDTO.setEndDate(endDate);
-        Doctor doctor = this.doctorService.get(doctorId);
+        Doctor doctor = this.doctorService.getByName(doctorName);
 
         List<Appointment> appointmentList = this.appointmentRepo.findByDoctorAndAppointmentDateBetween(
                 doctor,
@@ -121,16 +121,15 @@ public class AppointmentManager implements IAppointmentService {
                 endDate
         );
 
-        return appointmentList;
-    }
+        return appointmentList;    }
 
     @Override
-    public List<Appointment> filterbyAnimal(int animalId, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Appointment> filterbyAnimal(String animalName, LocalDateTime startDate, LocalDateTime endDate) {
         AppointmentFilterByAnimal appointmentFilterByAnimalDTO = new AppointmentFilterByAnimal();
-        appointmentFilterByAnimalDTO.setAnimalId(animalId);
+        appointmentFilterByAnimalDTO.setAnimalName(animalName);
         appointmentFilterByAnimalDTO.setStartDate(startDate);
         appointmentFilterByAnimalDTO.setEndDate(endDate);
-        Animal animal = this.animalService.get(animalId);
+        Animal animal = this.animalService.getByName(animalName);
 
         List<Appointment> appointmentList = this.appointmentRepo.findByAnimalAndAppointmentDateBetween(
                 animal,
@@ -138,12 +137,17 @@ public class AppointmentManager implements IAppointmentService {
                 endDate
         );
 
-        return appointmentList;
-    }
+        return appointmentList;    }
+
 
     @Override
     public List<Appointment> findByDoctorAndAppointmentDate(Doctor doctor, LocalDateTime appointmentDate) {
         return this.appointmentRepo.findByDoctorAndAppointmentDate(doctor, appointmentDate);
+    }
+
+    @Override
+    public List<Appointment> getAllAppointments() {
+        return this.appointmentRepo.findAll();
     }
 
 }

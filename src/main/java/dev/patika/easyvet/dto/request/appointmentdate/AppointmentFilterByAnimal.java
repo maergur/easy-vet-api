@@ -18,5 +18,5 @@ public class AppointmentFilterByAnimal {
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endDate;
-    private int animalId;
+    private String animalName;
 }

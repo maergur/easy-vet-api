@@ -9,6 +9,7 @@ import dev.patika.easyvet.dto.request.vaccine.VaccineSaveRequest;
 import dev.patika.easyvet.dto.response.doctor.DoctorResponse;
 import dev.patika.easyvet.dto.response.vaccine.VaccineResponse;
 import dev.patika.easyvet.entities.Animal;
+import dev.patika.easyvet.entities.Appointment;
 import dev.patika.easyvet.entities.Doctor;
 import dev.patika.easyvet.entities.Vaccine;
 import jakarta.validation.Valid;
@@ -53,7 +54,7 @@ public class VaccineController {
 
     @GetMapping("/getById/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Vaccine getById(@PathVariable("id") Long id) {
+    public VaccineResponse getById(@PathVariable("id") Long id) {
         return this.vaccineService.getById(id);
     }
 
@@ -61,6 +62,18 @@ public class VaccineController {
     @ResponseStatus(HttpStatus.OK)
     public List<Vaccine> getVaccinesByAnimalId(@PathVariable("id") Long id) {
         return this.vaccineService.getVaccinesByAnimalId(id);
+    }
+
+    @GetMapping("/getVaccinesByAnimalName/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Vaccine> getVaccinesByAnimalName(@PathVariable("name") String name) {
+        return this.vaccineService.getVaccinesByAnimalName(name);
+    }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public List<Vaccine> getAllVaccines() {
+        return this.vaccineService.findAll();
     }
 
     @GetMapping("/getAnimalsByExpiringVaccines")

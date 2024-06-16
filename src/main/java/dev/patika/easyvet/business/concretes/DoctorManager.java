@@ -31,6 +31,11 @@ public class DoctorManager implements IDoctorService {
     }
 
     @Override
+    public Doctor getByName(String name) {
+        return this.doctorRepo.findByName(name);
+    }
+
+    @Override
     public Page<Doctor> cursor(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page,pageSize);
         return this.doctorRepo.findAll(pageable);
@@ -48,4 +53,11 @@ public class DoctorManager implements IDoctorService {
         this.doctorRepo.delete(doctor);
         return true;
     }
+
+    @Override
+    public Doctor findByName(String name) {
+        return this.doctorRepo.findByName(name);
+    }
+
+
 }

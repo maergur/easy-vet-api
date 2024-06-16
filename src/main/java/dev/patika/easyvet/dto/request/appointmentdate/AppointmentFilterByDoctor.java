@@ -16,6 +16,6 @@ public class AppointmentFilterByDoctor {
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endDate;
-    private int doctorId;
+    private String doctorName;
 
 }

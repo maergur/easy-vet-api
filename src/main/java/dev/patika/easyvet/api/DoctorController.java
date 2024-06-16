@@ -69,4 +69,7 @@ public class DoctorController {
         this.doctorService.delete(id);
         return ResultHelper.ok();
     }
+
+
+
 }

@@ -1,8 +1,11 @@
 package dev.patika.easyvet.business.concretes;
 
 import dev.patika.easyvet.business.abstracts.IAvailableDateService;
+import dev.patika.easyvet.dao.DoctorRepo;
 import dev.patika.easyvet.dao.IAvailableDateRepo;
+import dev.patika.easyvet.entities.Animal;
 import dev.patika.easyvet.entities.AvailableDate;
+import dev.patika.easyvet.entities.Customer;
 import dev.patika.easyvet.entities.Doctor;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -15,10 +18,13 @@ import java.util.List;
 @Service
 public class AvailableDateManager implements IAvailableDateService {
     private final IAvailableDateRepo availableDateRepo;
+
+    private final DoctorRepo doctorRepo;
     private final EntityManager entityManager;
 
-    public AvailableDateManager(IAvailableDateRepo availableDateRepo, EntityManager entityManager) {
+    public AvailableDateManager(IAvailableDateRepo availableDateRepo, DoctorRepo doctorRepo, EntityManager entityManager) {
         this.availableDateRepo = availableDateRepo;
+        this.doctorRepo = doctorRepo;
         this.entityManager = entityManager;
     }
 
@@ -74,6 +80,20 @@ public class AvailableDateManager implements IAvailableDateService {
     @Override
     public List<AvailableDate> findByDoctorAndAvailableDateDate(Doctor doctor, LocalDate availableDate) {
         return this.availableDateRepo.findByDoctorAndAvailableDateDate(doctor,availableDate);
+    }
+
+    @Override
+    public List<AvailableDate> getAllAvailableDates() {
+        return this.availableDateRepo.findAll();
+    }
+
+    @Override
+    public List<AvailableDate> getAvailableDatesByDoctorName(String doctorName) {
+        Doctor doctor = doctorRepo.findByName(doctorName);
+        if (doctor != null) {
+            return availableDateRepo.findByDoctorId(doctor.getId());
+        }
+        return null;
     }
 
     public List<AvailableDate> checkAvailableDatesByDoctor(AvailableDate availableDate) {

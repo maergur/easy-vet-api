@@ -82,4 +82,16 @@ public class AnimalManager implements IAnimalService {
 
         return customer.getAnimalList();
     }
+
+    @Override
+    public List<Animal> getAnimalsByCustomerName(String customerName) {
+        Customer customer = customerRepo.findByName(customerName);
+        if (customer != null) {
+            return animalRepo.findByCustomerId(customer.getId());
+        }
+        return null;
+
+    }
+
+
 }

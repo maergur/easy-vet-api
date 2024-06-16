@@ -19,4 +19,7 @@ public interface IAnimalService {
     boolean delete(int id);
 
     List<Animal> getAnimalsByCustomerId(int customerId);
+
+    List<Animal> getAnimalsByCustomerName(String customerName);
+
 }

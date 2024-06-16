@@ -1,5 +1,6 @@
 package dev.patika.easyvet.dto.response.vaccine;
 
+import dev.patika.easyvet.entities.Report;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,5 +20,6 @@ public class VaccineResponse {
     private LocalDate protectionSD;
     private LocalDate protectionFD;
     private int animalId;
+    private Report report;
 
 }

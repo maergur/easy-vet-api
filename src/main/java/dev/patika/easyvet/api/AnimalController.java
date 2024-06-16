@@ -36,6 +36,7 @@ public class AnimalController {
         this.animalService = animalService;
     }
 
+
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AnimalResponse> save(@Valid @RequestBody AnimalSaveRequest animalSaveRequest) {
@@ -67,6 +68,12 @@ public class AnimalController {
     @ResponseStatus(HttpStatus.OK)
     public List<Animal> getAnimalsByCustomerId(@PathVariable("id") int customerId) {
         return this.animalService.getAnimalsByCustomerId(customerId);
+    }
+
+    @GetMapping("/getAnimalsByCustomerName/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Animal> getAnimalsByCustomerName(@PathVariable("name") String name) {
+        return this.animalService.getAnimalsByCustomerName(name);
     }
 
 
