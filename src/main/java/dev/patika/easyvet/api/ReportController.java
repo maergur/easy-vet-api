@@ -3,7 +3,13 @@ package dev.patika.easyvet.api;
 
 import dev.patika.easyvet.business.abstracts.IReportService;
 import dev.patika.easyvet.core.config.modelMapper.IModelMapperService;
+import dev.patika.easyvet.core.result.ResultData;
+import dev.patika.easyvet.core.utilities.ResultHelper;
+import dev.patika.easyvet.dto.response.doctor.DoctorResponse;
+import dev.patika.easyvet.dto.response.report.ReportResponse;
+import dev.patika.easyvet.entities.Appointment;
 import dev.patika.easyvet.entities.AvailableDate;
+import dev.patika.easyvet.entities.Doctor;
 import dev.patika.easyvet.entities.Report;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,5 +47,10 @@ import java.util.List;
         return this.reportService.getAll();
     }
 
+    @GetMapping("/getById/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Report getById(@PathVariable("id") Long id) {
+        return this.reportService.getById(id);
+    }
 }
 
